@@ -1,0 +1,19 @@
+(.venv) PS C:\Users\maxts\PyChar\GameShopProject> cd game_shop
+(.venv) PS C:\Users\maxts\PyChar\GameShopProject\game_shop> python manage.py shell
+Python 3.12.3 (tags/v3.12.3:f6650f9, Apr  9 2024, 14:05:25) [MSC v.1938 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from task1.models import Game, Buyer
+>>> tom = Buyer.objects.create(name = 'Tom', balance = 500.00, age = 21)
+>>> pol = Buyer.objects.create(name = 'Pol', balance = 500.00, age = 15)
+>>> den = Buyer.objects.create(name = 'Den', balance = 580.00, age = 30)
+>>> football = Game.objects.create(title = 'FIFA', cost = 204.58, size = 250, description='Football', age_limited = False)
+>>> football
+<Game: FIFA>
+>>> poker = Game.objects.create(title = 'Poker', cost = 904.58, size = 850, description='Poker', age_limited = True)       
+>>> metro = Game.objects.create(title = 'Metro', cost = 1384.58, size = 2850, description='Metro 2034', age_limited = True)
+>>> football.buyer.set((tom, pol, den))
+>>> poker.buyer.set((den,))
+>>> metro.buyer.set((tom,))
+>>> 
+
