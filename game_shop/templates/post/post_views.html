@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 60px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Посты</title>
+</head>
+<body>
+        <h1>Список постов</h1>
+            <div class="dropdown">
+                <button class="dropbtn">Количество постов</button>
+                <div class="dropdown-content">
+                    <a href="?count=3">3</a>
+                    <a href="?count=5">5</a>
+                    <a href="?count=10">10</a>
+                </div>
+            </div>
+            <ul>
+        {% for post in page_obj %}
+            <li>
+                <p></p>
+                <h2>{{ post.name }}</h2>
+                <p>{{ post.hint}}</p>
+                <p></p>
+            </li>
+        {% empty %}
+            <p>Нет постов.</p>
+        {% endfor %}
+            </ul>
+         <div class="pagination">
+        <p>Страницы:</p>
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+            {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <a href="#"> {{i}}</a>
+                {% else %}
+                    <a href="?page={{i}}"> {{i}}</a>
+                {% endif %}
+             {% endfor %}
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            {% endif %}
+    </div>
+
+</body>
+</html>

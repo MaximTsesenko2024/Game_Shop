@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.core.paginator',
     'task1',
 ]
 
@@ -57,7 +58,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / 'templates/fourth_task',
-                 BASE_DIR / 'templates/fifth_task'],
+                 BASE_DIR / 'templates/fifth_task',
+                 BASE_DIR / 'templates/post'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

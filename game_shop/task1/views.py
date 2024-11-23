@@ -1,13 +1,17 @@
 from django.shortcuts import render
+from django.core.handlers.wsgi import WSGIRequest
 from django.views.generic import TemplateView
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse
 from .forms import Registation
 from .models import *
 
+count_page = 3
+
 
 # Create your views here.
 
-def sign_up_by_django(request):
+def sign_up_by_django(request: WSGIRequest):
     def check_unic_name(users, username):
         for item in users:
             if item.name == username:
@@ -56,3 +60,23 @@ class Car(TemplateView):
     template_name = 'car.html'
     car = []
     extra_context = {'title': 'Корзина'}
+
+def post_views(request: WSGIRequest):
+    global count_page
+    posts = Post.objects.all()
+    count = request.GET.get('count')
+    print(request.GET.get('count'))
+    if count is None:
+        count = count_page
+    else:
+        count_page = count
+    paginator = Paginator(posts, count)
+    page_number = request.GET.get('page', 1)
+    try:
+        page_obj = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+    return render(request,'post_views.html', {'page_obj': page_obj})
+
